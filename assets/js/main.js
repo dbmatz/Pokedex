@@ -1,23 +1,36 @@
+const pokemonListOl = document.getElementById(`pokemonList`);
 
 pokeApi.getPokemons().then((pokemonList = []) => {
-    const pokemonListOl = document.getElementById(`pokemonList`);
-    console.log(pokemonList)
+    for (let i = 0; i < pokemonList.length; i++) {
+        const element = pokemonList[i];
+        let pokemonInfo;
+        pokeApi.getPokemonInfo(element.url).then((pokemonInfo) => {
+            pokemonInfo = convertPokemonToLi(pokemonInfo);
+            pokemonListOl.innerHTML += pokemonInfo;
+        })
+    }
 
-    pokemonListOl.innerHTML += pokemonList.map(convertPokemonToLi).join('');
 })
 
+// pokeApi.getPokemonInfo(1).then((response) => {
+//     console.log("response" ,response)
+//     const pokemon = convertPokemonToLi(response);
+
+//     pokemonListOl.innerHTML += pokemon;
+// });
+
 function convertPokemonToLi(pokemon) {
-    return `<li class="pokemon">
-                    <span class="number">#001</span>
+    return `<li class="pokemon ${pokemon.types[0].type.name}">
+                    <span class="number">#${String(pokemon.id).padStart(3, '0')}</span>
                     <span class="name">${pokemon.name}</span>
 
                     <div class="detail">
                         <ol class="types">
-                            <li class="type">Grass</li>
-                            <li class="type">Poison</li>
+                            <li class="type ${pokemon.types[0].type.name}">${pokemon.types[0].type.name}</li>
+                            ${pokemon.types[1] ? `<li class="type ${pokemon.types[0].type.name}">${pokemon.types[1].type.name}</li>` : ''}
                         </ol>
                         <img
-                            src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/1.svg"
+                            src="${pokemon.sprites.other.dream_world.front_default}"
                             alt="${pokemon.name}">
                     </div>
                 </li>`;
