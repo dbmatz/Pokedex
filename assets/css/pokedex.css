@@ -16,6 +16,10 @@
     flex-direction: column;
 }
 
+.normal {
+    background-color: #919aa2;
+}
+
 .grass{
     background-color: #60C252;
 }
@@ -84,6 +88,14 @@
     background-color: #E996AF;
 }
 
+.stellar {
+    background-color: #e9e9e9;
+}
+
+.unknown {
+    background-color: #71cb98;
+}
+
 .pokemon .number {
     color: #000;
     opacity: 0.3;
@@ -140,6 +152,32 @@
     border: none;
     border-radius: .5rem;
     padding: .5rem 1rem;
+}
+
+.typeList {
+    list-style: none;
+    border-radius: 1rem;
+    padding: 0.5rem;
+    text-align: center;
+    cursor: pointer;
+}
+
+.typeList:hover{
+    filter: brightness(1.5);
+}
+
+#pokemonsTypesList {
+    display: flex;
+    gap: .5rem;
+    overflow-x: scroll;
+}
+
+#pokemonsTypesList li {
+    list-style: none;
+}
+
+#loadingTypeList img{
+    width: 3%;
 }
 
 @media screen and (min-width: 380px) {

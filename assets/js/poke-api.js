@@ -17,7 +17,7 @@ function convertPokemonJsonToModel(pokemonDetail) {
 
 pokeApi.getPokemonDetail = (pokemon) => {
     return fetch(pokemon.url).then((response) => response.json())
-    .then(convertPokemonJsonToModel);
+        .then(convertPokemonJsonToModel);
 }
 
 pokeApi.getPokemons = (offset = 0, limit = 5) => {
@@ -28,5 +28,15 @@ pokeApi.getPokemons = (offset = 0, limit = 5) => {
         .then((jsonBody) => jsonBody.results)
         .then((pokemonsList) => pokemonsList.map(pokeApi.getPokemonDetail))
         .then((pokemonsUrlList) => Promise.all(pokemonsUrlList))
+        .catch((error) => console.error(error))
+}
+
+pokeApi.getAllTypes = () => {
+    const urlPokemon = `${baseUrl}/v2/type`;
+
+
+    return fetch(urlPokemon)
+        .then((response) => response.json())
+        .then((jsonBody) => jsonBody.results)
         .catch((error) => console.error(error))
 }
