@@ -29,11 +29,17 @@ function loadMorePokemons(offset, limit) {
         console.log("pokemonList", pokemonList)
         const pokemonsLiList = pokemonList.map(convertPokemonToLi).join("");
 
+        if (offset == 0) {
+            pokemonListOl.innerHTML = pokemonsLiList;
+            return;
+        }
+
         pokemonListOl.innerHTML += pokemonsLiList;
     })
 }
 
 loadMoreButton?.addEventListener('click', () => {
+    loadMoreButton.innerHTML = `<img src="/assets/img/kOnzy.gif" alt="loading">`;
     offset += limit;
 
     const qtdRecordsNextPage = offset + limit;
@@ -45,12 +51,21 @@ loadMoreButton?.addEventListener('click', () => {
     }
 
     loadMorePokemons(offset, limit);
+    loadMoreButton.innerHTML = "+";
 });
 
 pokeApi.getAllTypes().then((typesList) => {
     console.log(typesList);
 
-   const liTypesList = typesList.map(generateTypesList).join("");
+    let liTypesList = [
+        `<li class="typeList all selectType">
+    all
+                </li>`
+    ]
+
+    liTypesList += typesList.map(generateTypesList).join("");
+
+    console.log("liTypesList", liTypesList)
 
     pokemonsTypesList.innerHTML = liTypesList;
 });
